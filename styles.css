@@ -1,9 +1,11 @@
 *{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 .game-wrapper{
     width: 100vw;
-    height: 100vw;
     display: flex;
     flex-flow: column wrap;
     align-items: center;
@@ -11,18 +13,54 @@
 .heading{
     display: flex;
     justify-content: center;
-    height: 60px;
+    align-items: center;
+    height: 80px;
     font-size: 35px;
     font-weight: 550;
     width: 100%;
+    background-color: #0C1F3F;
+    margin-bottom: 10px;
+}
+.heading img{
+    position: relative;
+    left: -190px;
+}
+.heading span{
+    position: relative;
+    left: -80px;
+    color: white;
 }
 .canvas-wrapper{
     width: 100%;
     display: flex;
     justify-content: center;
 }
-#my-canvas{
+#canvas{
     /* background-image: linear-gradient(175deg, #4299d0, #11496c); */
-    height: 600px;
-    width: 600px;
+    position: relative;
+}
+.canvas-options{
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    color: white;
+    width: 60px;
+}
+.canvas-options div{
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1F5282;
+    height: 30px;
+}
+.canvas-options div:hover{
+    background-color: #6B85A6;
+    cursor: pointer;
+}
+.canvas-options_title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
 }

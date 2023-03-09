@@ -1,68 +1,107 @@
-
-let app;
-
-let levels = 8
-let lines = 2 + levels
-
 window.onload = function () {
-    app = new PIXI.Application({
+    let app = new PIXI.Application({
         height: 700,
-        backgroundColor: 0x1496c
-    })
-    
-    document.getElementById("canvas").appendChild(app.view)
+        backgroundColor: 0x1496c,
+    });
 
-    let pegs = []
-    let slots = []
+    document.getElementById("canvas").appendChild(app.view);
 
-    let space_bottom = 0
+    let initial_level = 8;
+    var fraction;
+    var slots; //Store slots 
+    var pegs; //Store pegs 
+    var opening; //Store the openning
 
-    let fraction = (8/lines)
+    let slot_costs_list = [
+        [5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6],
+        [5.6, 2, 1.6, 1, 0.7, 0.7, 1, 1.6, 2, 5.6],
+        [8.9, 3, 1.1, 1.1, 1, 0.5, 1, 1.1, 1.4, 3, 8.9],
+        [8.4, 3, 1.9, 1.3, 1, 0.7, 0.7, 1, 1.3, 1.9, 3, 8.4],
+        [10, 3, 1.6, 1.4, 1.1, 1, 0.5, 1, 1.1, 1.4, 1.6, 3, 10],
+        [8.1, 4, 3, 1.9, 1.2, 0.9, 0.7, 0.7, 0.9, 1.2, 1.9, 3, 4, 8.1],
+        [7.1, 4, 1.9, 1.4, 1.3, 1.1, 1, 0.5, 1, 1.1, 1.3, 1.4, 1.9, 4, 7.1],
+        [15, 8, 3, 2, 1.5, 1.1, 1, 0.7, 0.7, 1, 1.1, 1.5, 2, 3, 8, 15],
+        [16, 9, 2, 1.4, 1.4, 1.2, 1.1, 1, 0.5, 1, 1.1, 1.2, 1.4, 1.4, 2, 9, 16],
+    ];
 
-    for( let i = 3; i <= lines; i++){
-        let space_left = 0
-        
-        //adding spaces
-        for(let space = 1; space <= (lines - i); space++){
-            space_left += (45 * fraction)
+    //Setting up the board.
+    function setup(levels) {
+        let lines = 2 + levels;
+
+        let slot_costs = slot_costs_list[levels - 8];
+
+        pegs = [];
+        slots = [];
+
+        let space_bottom = 0;
+
+        fraction = 8 / lines;
+
+        for (let i = 3; i <= lines; i++) {
+            let space_left = 0;
+
+            //adding spaces
+            for (let space = 1; space <= lines - i; space++) {
+                space_left += 45 * fraction;
+            }
+
+            //adding pags into the grid
+            for (let point = 1; point <= i; point++) {
+                let beg_obj = new Peg(space_left, space_bottom, -3, 35 - lines, 35 - lines, (35 - lines)/2);
+                let new_beg = beg_obj.create();
+
+                app.stage.addChild(new_beg);
+
+                pegs.push(beg_obj);
+                space_left += 90 * fraction;
+            }
+
+            space_bottom += 80 * fraction;
         }
 
-        //adding pags into the grid
-        for(let point = 1; point <= i; point++){
-            let beg_obj = new Peg(space_left, space_bottom, -3)
-            let new_beg = beg_obj.create()
-            new_beg.width = 35 - (lines) 
-            new_beg.height = 35 - (lines) 
+        let slot_costs_space = 0;
+        for (let s = 0; s < slot_costs.length; s++) {
+            let slot_obj = new Slot((120 * fraction) + slot_costs_space, (space_bottom + 60), -3, (55 - lines), (50 - lines), slot_costs[s]);
+            let new_slot = slot_obj.create();
 
-            beg_obj.radius = new_beg.width / 2;
-            beg_obj.width = new_beg.width
-            beg_obj.height = new_beg.height
+            slot_obj.radius = new_slot.width / 2;
 
-            app.stage.addChild(new_beg)
+            app.stage.addChild(new_slot);
+            slots.push(slot_obj);
 
-            pegs.push(beg_obj)
-            space_left += 90 * fraction
-
+            slot_costs_space += 91 * fraction;
         }
 
-        space_bottom += 80 * fraction
-
+        opening = PIXI.Sprite.from(`./images/bC.png`);
+        opening.anchor.set(this.anchor);
+        opening.x = app.view.width / 2 - 10;
+        opening.y = 10;
+        opening.width = 50 * fraction;
+        opening.height = 50 * fraction;
+        app.stage.addChild(opening);
     }
-    // let slot_obj = new Slot(50, space_bottom + 80, -3, 100, 100, 0.5)
-    // let new_slot = slot_obj.create()
-    // new_slot.width = 100 - (lines) 
-    // new_slot.height = 100 - (lines) 
 
-    // slot_obj.radius = new_slot.width / 2;
+    function destroyApp() {
+        document.getElementById("canvas").removeChild(app.view);
 
-    // app.stage.addChild(new_slot)
+        app = new PIXI.Application({
+            height: 700,
+            backgroundColor: 0x1496c,
+        });
 
-    //for(let )
+        document.getElementById("canvas").appendChild(app.view);
+    }
 
+    setup(initial_level);
 
+    app.stage.interactive = true;
 
-
-    
-  
-}
-
+    document.querySelectorAll("#canvas-option_div").forEach((op) => {
+        op.addEventListener("click", function (e) {
+            new_level = e.target.innerHTML;
+            console.log(new_level);
+            destroyApp();
+            setup(Number(new_level));
+        });
+    });
+};

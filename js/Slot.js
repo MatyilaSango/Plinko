@@ -7,6 +7,8 @@ class Slot {
         this.width = width;
         this.height = height
         this.cost = cost
+        this.anchor = 0
+        this.radius = 0
     }
 
     create(){
@@ -14,6 +16,8 @@ class Slot {
         peg.anchor.set(this.anchor);
         peg.x = this.x;
         peg.y = this.y;
+        peg.width = this.width;
+        peg.height = this.height
 
         return peg;
     }
