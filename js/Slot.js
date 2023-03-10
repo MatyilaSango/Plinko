@@ -1,6 +1,5 @@
 class Slot {
     constructor( x, y, anchor, width, height, cost){
-        //sthis.context = context
         this.x = x;
         this.y = y;
         this.anchor = anchor;

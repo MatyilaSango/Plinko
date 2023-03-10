@@ -15,11 +15,6 @@ class Peg {
         peg.y = this.y;
         peg.width = this.width
         peg.height = this.height
-        
-        // let peg = new PIXI.Graphics();
-        // peg.beginFill(0xA5E3F4);
-        // peg.drawCircle(this.x, this.y, this.radius);
-        // peg.endFill();
 
         return peg;
     }

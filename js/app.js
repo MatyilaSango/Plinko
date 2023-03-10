@@ -7,9 +7,9 @@ window.onload = function () {
     document.getElementById("canvas").appendChild(app.view);
 
     let initial_level = 8;
-    var fraction;
-    var slots; //Store slots 
-    var pegs; //Store pegs 
+    var fraction; //Amount to shrink the pegs and solts by when increasing number of lines
+    var slots = []; //Store slots objects
+    var pegs = []; //Store pegs objects
     var opening; //Store the openning
 
     let slot_costs_list = [
@@ -33,12 +33,13 @@ window.onload = function () {
         pegs = [];
         slots = [];
 
-        let space_bottom = 0;
-
         fraction = 8 / lines;
 
+        let space_bottom = 150 * fraction;
+
+        //adding pegs into the stage
         for (let i = 3; i <= lines; i++) {
-            let space_left = 0;
+            let space_left = 50;
 
             //adding spaces
             for (let space = 1; space <= lines - i; space++) {
@@ -47,7 +48,7 @@ window.onload = function () {
 
             //adding pags into the grid
             for (let point = 1; point <= i; point++) {
-                let beg_obj = new Peg(space_left, space_bottom, -3, 35 - lines, 35 - lines, (35 - lines)/2);
+                let beg_obj = new Peg(space_left, space_bottom, 0, 35 - lines, 35 - lines, (35 - lines)/2);
                 let new_beg = beg_obj.create();
 
                 app.stage.addChild(new_beg);
@@ -59,9 +60,10 @@ window.onload = function () {
             space_bottom += 80 * fraction;
         }
 
+        //adding slots into the stage
         let slot_costs_space = 0;
         for (let s = 0; s < slot_costs.length; s++) {
-            let slot_obj = new Slot((120 * fraction) + slot_costs_space, (space_bottom + 60), -3, (55 - lines), (50 - lines), slot_costs[s]);
+            let slot_obj = new Slot((70 ) + slot_costs_space, (space_bottom), 0, (55 - lines), (50 - lines), slot_costs[s]);
             let new_slot = slot_obj.create();
 
             slot_obj.radius = new_slot.width / 2;
@@ -72,13 +74,17 @@ window.onload = function () {
             slot_costs_space += 91 * fraction;
         }
 
+        //adding openning into the stage
         opening = PIXI.Sprite.from(`./images/bC.png`);
-        opening.anchor.set(this.anchor);
-        opening.x = app.view.width / 2 - 10;
-        opening.y = 10;
+        opening.anchor.set(0)
+        opening.x = pegs[1].x - (8 * fraction);
+        opening.y = (50 * fraction);
         opening.width = 50 * fraction;
         opening.height = 50 * fraction;
         app.stage.addChild(opening);
+
+        document.getElementById("play-button").addEventListener("click", playBall)
+
     }
 
     function destroyApp() {
@@ -92,14 +98,68 @@ window.onload = function () {
         document.getElementById("canvas").appendChild(app.view);
     }
 
-    setup(initial_level);
+    function playBall() {
+        var pinkBall = PIXI.Sprite.from(`./images/pink_ball.png`);
+
+        pinkBall.x = opening.x + (5 * fraction);
+        pinkBall.y = opening.y;
+        pinkBall.width = 40 * fraction;
+        pinkBall.height = 40 * fraction;
+        pinkBall.vy = 0;
+        pinkBall.vx = 0;
+        app.stage.addChild(pinkBall);
+
+        app.ticker.add(function(delta){
+            pinkBall.y += pinkBall.vy
+            pinkBall.vy += 0.5
+            if(pinkBall.y > app.view.height - 50){
+                pinkBall.vy *= -0.5
+                pinkBall.y += pinkBall.vy
+            }
+
+            for(let pegIndx = 0; pegIndx < pegs.length; pegIndx++){
+                
+                if(isCollision(pegs[pegIndx].x - (5 * fraction), pegs[pegIndx].y, pegs[pegIndx].radius, pinkBall.x, pinkBall.y, pinkBall.width / 2)){
+                    pinkBall.vy *= -0.5
+                    pinkBall.y += pinkBall.vy
+                    pinkBall.vx = 3
+                    if(randomTurn === 0){
+                        pinkBall.x -= pinkBall.vx
+                    }
+                    else if(randomTurn === 1){
+                        pinkBall.x += pinkBall.vx
+                    }
+                    
+                    break;
+                    
+                }
+                else{
+                    randomTurn = 1 //Math.floor(Math.random() * 2);
+                }
+            }
+            
+            for(let slotIndx = 0; slotIndx < slots.length; slotIndx++){
+                if(isCollision(slots[slotIndx].x, slots[slotIndx].y, slots[slotIndx].radius, pinkBall.x, pinkBall.y, pinkBall.width / 2)){
+                    app.stage.removeChild(pinkBall)
+                }
+            }
+        })
+
+    }
+
+    function isCollision(peg_x, peg_y, peg_r, pink_ball_x, pink_ball_y, pink_ball_r) {
+        let squareDistance = (peg_x-pink_ball_x)*(peg_x-pink_ball_x) + (peg_y-pink_ball_y)*(peg_y-pink_ball_y);
+
+        return squareDistance <= ((peg_r + pink_ball_r) * (peg_r + pink_ball_r))
+    }
+
+    setup(initial_level);   
 
     app.stage.interactive = true;
 
     document.querySelectorAll("#canvas-option_div").forEach((op) => {
         op.addEventListener("click", function (e) {
             new_level = e.target.innerHTML;
-            console.log(new_level);
             destroyApp();
             setup(Number(new_level));
         });

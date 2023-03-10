@@ -9,6 +9,10 @@
     display: flex;
     flex-flow: column wrap;
     align-items: center;
+    background-image: url("images/Plinko_background.jpeg");
+    background-repeat: no-repeat;
+    object-fit: cover;
+    height: 100vh;
 }
 .heading{
     display: flex;
@@ -36,7 +40,6 @@
     justify-content: center;
 }
 #canvas{
-    /* background-image: linear-gradient(175deg, #4299d0, #11496c); */
     position: relative;
 }
 .canvas-options{
@@ -53,6 +56,7 @@
     align-items: center;
     background-color: #1F5282;
     height: 30px;
+    box-shadow: 0 0 10px  black;
 }
 .canvas-options div:hover{
     background-color: #6B85A6;
@@ -63,4 +67,28 @@
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
+}
+.play-button{
+    position: absolute;
+    left: 60px;
+    top: 10px;
+    border: 5px solid orange;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 40px;
+    color: orange;
+    background-color: white;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+    box-shadow: 0 0 20px  rgb(117, 117, 117);
+}
+.play-button:hover{
+    border: 5px solid rgb(255, 128, 0);
+}
+.play-button:active{
+    color: green;
 }
