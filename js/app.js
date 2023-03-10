@@ -83,7 +83,9 @@ window.onload = function () {
         opening.height = 50 * fraction;
         app.stage.addChild(opening);
 
-        document.getElementById("play-button").addEventListener("click", playBall)
+        document.getElementById("play-button").addEventListener("click", () => {
+            setTimeout(start, 0)
+        })
 
     }
 
@@ -98,16 +100,18 @@ window.onload = function () {
         document.getElementById("canvas").appendChild(app.view);
     }
 
-    function playBall() {
+    function start() {
         var pinkBall = PIXI.Sprite.from(`./images/pink_ball.png`);
 
         pinkBall.x = opening.x + (5 * fraction);
         pinkBall.y = opening.y;
-        pinkBall.width = 40 * fraction;
-        pinkBall.height = 40 * fraction;
+        pinkBall.width = 35 * fraction;
+        pinkBall.height = 35 * fraction;
         pinkBall.vy = 0;
         pinkBall.vx = 0;
         app.stage.addChild(pinkBall);
+
+        let last_peg = undefined;
 
         app.ticker.add(function(delta){
             pinkBall.y += pinkBall.vy
@@ -120,21 +124,25 @@ window.onload = function () {
             for(let pegIndx = 0; pegIndx < pegs.length; pegIndx++){
                 
                 if(isCollision(pegs[pegIndx].x - (5 * fraction), pegs[pegIndx].y, pegs[pegIndx].radius, pinkBall.x, pinkBall.y, pinkBall.width / 2)){
+                    current_peg = pegs[pegIndx]
                     pinkBall.vy *= -0.5
                     pinkBall.y += pinkBall.vy
-                    pinkBall.vx = 3
+                    pinkBall.vx = 4
+
+                    if(current_peg != last_peg){
+                        randomTurn = Math.floor(Math.random() * 2);
+                        last_peg = current_peg
+                    }
+
                     if(randomTurn === 0){
                         pinkBall.x -= pinkBall.vx
                     }
                     else if(randomTurn === 1){
                         pinkBall.x += pinkBall.vx
                     }
-                    
+                    //randomTurn = Math.floor(Math.random() * 2);
                     break;
                     
-                }
-                else{
-                    randomTurn = 1 //Math.floor(Math.random() * 2);
                 }
             }
             
