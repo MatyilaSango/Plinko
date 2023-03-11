@@ -61,17 +61,13 @@ window.onload = function () {
         }
 
         //adding slots into the stage
-        let slot_costs_space = 0;
         for (let s = 0; s < slot_costs.length; s++) {
-            let slot_obj = new Slot((70 ) + slot_costs_space, (space_bottom), 0, (55 - lines), (50 - lines), slot_costs[s]);
+            let temp_bottom_peg = pegs[pegs.length-1 - slot_costs.length + s] // taking each bottom peg so its x can be used as a referrence point for each slot
+            let slot_obj = new Slot(temp_bottom_peg.x + temp_bottom_peg.width * fraction , (space_bottom), 0, (55 - lines), (50 - lines), slot_costs[s]);
             let new_slot = slot_obj.create();
-
-            slot_obj.radius = new_slot.width / 2;
 
             app.stage.addChild(new_slot);
             slots.push(slot_obj);
-
-            slot_costs_space += 91 * fraction;
         }
 
         //adding openning into the stage
@@ -84,7 +80,7 @@ window.onload = function () {
         app.stage.addChild(opening);
 
         document.getElementById("play-button").addEventListener("click", () => {
-            setTimeout(start, 0)
+            new Play(opening, app, fraction, pegs, slots).start()
         })
 
     }
@@ -98,67 +94,6 @@ window.onload = function () {
         });
 
         document.getElementById("canvas").appendChild(app.view);
-    }
-
-    function start() {
-        var pinkBall = PIXI.Sprite.from(`./images/pink_ball.png`);
-
-        pinkBall.x = opening.x + (5 * fraction);
-        pinkBall.y = opening.y;
-        pinkBall.width = 35 * fraction;
-        pinkBall.height = 35 * fraction;
-        pinkBall.vy = 0;
-        pinkBall.vx = 0;
-        app.stage.addChild(pinkBall);
-
-        let last_peg = undefined;
-
-        app.ticker.add(function(delta){
-            pinkBall.y += pinkBall.vy
-            pinkBall.vy += 0.5
-            if(pinkBall.y > app.view.height - 50){
-                pinkBall.vy *= -0.5
-                pinkBall.y += pinkBall.vy
-            }
-
-            for(let pegIndx = 0; pegIndx < pegs.length; pegIndx++){
-                
-                if(isCollision(pegs[pegIndx].x - (5 * fraction), pegs[pegIndx].y, pegs[pegIndx].radius, pinkBall.x, pinkBall.y, pinkBall.width / 2)){
-                    current_peg = pegs[pegIndx]
-                    pinkBall.vy *= -0.5
-                    pinkBall.y += pinkBall.vy
-                    pinkBall.vx = 4
-
-                    if(current_peg != last_peg){
-                        randomTurn = Math.floor(Math.random() * 2);
-                        last_peg = current_peg
-                    }
-
-                    if(randomTurn === 0){
-                        pinkBall.x -= pinkBall.vx
-                    }
-                    else if(randomTurn === 1){
-                        pinkBall.x += pinkBall.vx
-                    }
-                    //randomTurn = Math.floor(Math.random() * 2);
-                    break;
-                    
-                }
-            }
-            
-            for(let slotIndx = 0; slotIndx < slots.length; slotIndx++){
-                if(isCollision(slots[slotIndx].x, slots[slotIndx].y, slots[slotIndx].radius, pinkBall.x, pinkBall.y, pinkBall.width / 2)){
-                    app.stage.removeChild(pinkBall)
-                }
-            }
-        })
-
-    }
-
-    function isCollision(peg_x, peg_y, peg_r, pink_ball_x, pink_ball_y, pink_ball_r) {
-        let squareDistance = (peg_x-pink_ball_x)*(peg_x-pink_ball_x) + (peg_y-pink_ball_y)*(peg_y-pink_ball_y);
-
-        return squareDistance <= ((peg_r + pink_ball_r) * (peg_r + pink_ball_r))
     }
 
     setup(initial_level);   
