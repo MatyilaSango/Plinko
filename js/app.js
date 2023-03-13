@@ -11,6 +11,12 @@ window.onload = function () {
         backgroundColor: 0x1496c,
     });
 
+    let music = new Audio("./Sound Effects/background_music.mp3")
+    music.loop = true
+    music.volume = 0.2
+    music.play()
+    
+
     document.getElementById("canvas").appendChild(app.view);
 
     let initial_level = 8; // Initial lines
