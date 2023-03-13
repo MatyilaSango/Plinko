@@ -36,7 +36,7 @@ window.onload = function () {
         pegs = [];
         slots = [];
 
-        fraction = 8 / lines;
+        fraction = 7 / lines;
 
         let space_bottom = 150 * fraction;
 
@@ -46,21 +46,21 @@ window.onload = function () {
 
             //adding spaces
             for (let space = 1; space <= lines - i; space++) {
-                space_left += 45 * fraction;
+                space_left += 50 * fraction;
             }
 
             //adding pags into the grid
             for (let point = 1; point <= i; point++) {
-                let beg_obj = new Peg(space_left, space_bottom, 0, 35 - lines, 35 - lines, (35 - lines)/2);
+                let beg_obj = new Peg(space_left, space_bottom, 0, 30 * fraction, 30 * fraction, 30 * fraction / 2);
                 let new_beg = beg_obj.create();
 
                 app.stage.addChild(new_beg);
 
                 pegs.push(beg_obj);
-                space_left += 90 * fraction;
+                space_left += 100 * fraction;
             }
 
-            space_bottom += 80 * fraction;
+            space_bottom += 90 * fraction;
         }
 
         //adding slots into the stage

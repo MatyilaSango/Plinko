@@ -45,7 +45,7 @@ class Play {
     
                     that.pinkBall.vy *= -0.5
                     that.pinkBall.y += that.pinkBall.vy
-                    that.pinkBall.vx = 10 * that.fraction
+                    that.pinkBall.vx = 9 * that.fraction
     
                     if(current_peg != last_peg){
                         randomTurn = Math.floor(Math.random() * 2);
