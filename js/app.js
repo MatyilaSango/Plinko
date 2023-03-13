@@ -3,7 +3,7 @@ var slots = []; //Store slots objects
 var pegs = []; //Store pegs objects
 var opening; //Store the openning
 var bet = 1.00; //Bet amount
-var points = 8 //Amount of points
+var points = 100 //Amount of points
 
 window.onload = function () {
     let app = new PIXI.Application({
