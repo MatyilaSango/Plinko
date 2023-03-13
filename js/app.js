@@ -1,3 +1,10 @@
+var fraction; //Amount to shrink the pegs and solts by when increasing number of lines
+var slots = []; //Store slots objects
+var pegs = []; //Store pegs objects
+var opening; //Store the openning
+var bet = 1.00; //Bet amount
+var points = 100 //Amount of points
+
 window.onload = function () {
     let app = new PIXI.Application({
         height: 700,
@@ -6,11 +13,7 @@ window.onload = function () {
 
     document.getElementById("canvas").appendChild(app.view);
 
-    let initial_level = 8;
-    var fraction; //Amount to shrink the pegs and solts by when increasing number of lines
-    var slots = []; //Store slots objects
-    var pegs = []; //Store pegs objects
-    var opening; //Store the openning
+    let initial_level = 8; // Initial lines
 
     let slot_costs_list = [
         [5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6],
@@ -80,11 +83,17 @@ window.onload = function () {
         app.stage.addChild(opening);
 
         document.getElementById("play-button").addEventListener("click", () => {
-            new Play(opening, app, fraction, pegs, slots).start()
+            if(points > 0 && bet <= points){
+                points -= bet
+                points = roundToTwoDecimal(points)
+                document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
+                new Play(opening, app, fraction, pegs, slots, bet).start()
+            }
         })
 
     }
 
+    //Destroy the board
     function destroyApp() {
         document.getElementById("canvas").removeChild(app.view);
 
@@ -96,15 +105,36 @@ window.onload = function () {
         document.getElementById("canvas").appendChild(app.view);
     }
 
+    //To round to two decimal
+    function roundToTwoDecimal(num) {
+        return +(Math.round(num + "e+2")  + "e-2");
+    }
+
     setup(initial_level);   
 
     app.stage.interactive = true;
 
     document.querySelectorAll("#canvas-option_div").forEach((op) => {
         op.addEventListener("click", function (e) {
-            new_level = e.target.innerHTML;
+            let new_level = e.target.innerHTML;
             destroyApp();
             setup(Number(new_level));
         });
     });
+
+    document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
+
+    document.getElementById("points-bet-wrapper__bet--increase").addEventListener("click", () => {
+        if(points > bet){
+            bet += 1.00;
+            document.getElementById("points-bet-wrapper__bet--amount").innerHTML = `${bet}.00`;
+        }
+    })
+
+    document.getElementById("points-bet-wrapper__bet--decrease").addEventListener("click", () => {
+        if(bet > 1.00){
+            bet -= 1.00;
+            document.getElementById("points-bet-wrapper__bet--amount").innerHTML = `${bet}.00`;
+        }
+    })
 };

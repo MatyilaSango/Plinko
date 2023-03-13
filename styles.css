@@ -92,3 +92,78 @@
 .play-button:active{
     color: green;
 }
+.points-bet-wrapper{
+    position: absolute;
+    left: 30px;
+    top: 110px;
+    width: 150px;
+    color: white;
+
+}
+.points-bet-wrapper__bet{
+    margin-bottom: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+.points-bet-wrapper__bet--increase,
+.points-bet-wrapper__bet--decrease{
+   background-color: #1F5282;
+   width: 20px;
+   height: 25px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-left: 10px;
+   border-radius: 5px;
+   box-shadow: 0 0 10px  black;
+   cursor: pointer;
+}
+.points-bet-wrapper__bet--decrease{
+margin-left: 0;
+margin-right: 10px;
+}
+.points-bet-wrapper__bet--increase:active,
+.points-bet-wrapper__bet--decrease:active{
+    box-shadow: 0 0 0px  black;
+}
+.points-bet-wrapper__points,.points-bet-wrapper__won-flash{
+    color: rgba(255, 255, 255, 0.7);
+    border: 3px solid#1F5282;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    position: relative;
+    left: -10px;
+    box-shadow: 0 0 10px  black;
+    margin-top: 20px;
+}
+.points-bet-wrapper__won-flash{
+    margin-top: 0;
+    margin-bottom: 10px;
+    box-shadow: none;
+    border: none;
+    color: orange;
+    display: none;
+}
+.points-bet-wrapper__won-flash__animate{
+    display: flex;
+    animation: flashWon linear 3s infinite;
+}
+
+@keyframes flashWon {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1s;
+    }
+}
+
+
+

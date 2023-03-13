@@ -1,6 +1,6 @@
 class Play {
 
-    constructor(opening, app, fraction, pegs, slots){
+    constructor(opening, app, fraction, pegs, slots, bet){
         this.opening = opening
         this.app = app
         this.fraction = fraction
@@ -8,10 +8,11 @@ class Play {
         this.slots = slots
         this.pinkBall = PIXI.Sprite.from(`./images/pink_ball.png`);
         this.cost_scored = 0
+        this.bet = bet
     }
 
     start() {
-        
+        window.document.getElementById("points-bet-wrapper__won-flash").classList.remove("points-bet-wrapper__won-flash__animate")
         this.pinkBall.x = this.opening.x + (5 * this.fraction);
         this.pinkBall.y = this.opening.y;
         this.pinkBall.width = 35 * this.fraction;
@@ -65,14 +66,23 @@ class Play {
             
             for(let slotIndx = 0; slotIndx < that.slots.length; slotIndx++){
                 if(that.isCollision(that.slots[slotIndx].x, that.slots[slotIndx].y + 40, that.slots[slotIndx].width / 2, that.pinkBall.x, that.pinkBall.y, that.pinkBall.width / 2)){
+                    that.app.stage.removeChild(that.pinkBall)
                     let scoredSoundEffect = new Audio("./Sound Effects/scoreEffect.wav")
                     scoredSoundEffect.volume = 0.2
                     scoredSoundEffect.play()
-                    that.cost_scored = that.slots[slotIndx].cost
-                    that.app.stage.removeChild(that.pinkBall)
+                    if(that.cost_scored === 0){
+                        that.cost_scored = that.getCostScored(that.bet, that.slots[slotIndx].cost)
+                        window.points += that.cost_scored
+                        window.points = that.roundToTwoDecimal(window.points)
+                        window.document.getElementById("points-won").innerHTML = that.cost_scored
+                        document.getElementById("points-bet-wrapper__points--player-points").innerHTML = window.points
+                        window.document.getElementById("points-bet-wrapper__won-flash").classList.add("points-bet-wrapper__won-flash__animate")
+                    }
+                    
                 }
             }
         })
+        return that.cost_scored
     
     }
 
@@ -82,7 +92,10 @@ class Play {
         return squareDistance <= ((peg_r + pink_ball_r) * (peg_r + pink_ball_r))
     }
 
-    cost_scored(){
-        return this.cost_scored
+    getCostScored(bet, slot_cost){
+        return bet * slot_cost;
+    }
+    roundToTwoDecimal(num) {
+        return +(Math.round(num + "e+2")  + "e-2");
     }
 }
