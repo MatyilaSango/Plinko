@@ -3,7 +3,7 @@ var slots = []; //Store slots objects
 var pegs = []; //Store pegs objects
 var opening; //Store the openning
 var bet = 1.00; //Bet amount
-var points = 100 //Amount of points
+var points = 8 //Amount of points
 
 window.onload = function () {
     let app = new PIXI.Application({
@@ -81,16 +81,6 @@ window.onload = function () {
         opening.width = 50 * fraction;
         opening.height = 50 * fraction;
         app.stage.addChild(opening);
-
-        document.getElementById("play-button").addEventListener("click", () => {
-            if(points > 0 && bet <= points){
-                points -= bet
-                points = roundToTwoDecimal(points)
-                document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
-                new Play(opening, app, fraction, pegs, slots, bet).start()
-            }
-        })
-
     }
 
     //Destroy the board
@@ -135,6 +125,15 @@ window.onload = function () {
         if(bet > 1.00){
             bet -= 1.00;
             document.getElementById("points-bet-wrapper__bet--amount").innerHTML = `${bet}.00`;
+        }
+    })
+
+    document.getElementById("play-button").addEventListener("click", () => {
+        if(points > 0 && bet <= points){
+            points -= bet
+            points = roundToTwoDecimal(points)
+            document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
+            new Play(opening, app, fraction, pegs, slots, bet).start()
         }
     })
 };
