@@ -71,7 +71,7 @@ class Play {
                     scoredSoundEffect.volume = 0.2
                     scoredSoundEffect.play()
                     if(that.cost_scored === 0){
-                        that.cost_scored = that.getCostScored(that.bet, that.slots[slotIndx].cost)
+                        that.cost_scored = that.roundToTwoDecimal( that.getCostScored(that.bet, that.slots[slotIndx].cost) )
                         window.points += that.cost_scored
                         window.points = that.roundToTwoDecimal(window.points)
                         window.document.getElementById("points-won").innerHTML = that.cost_scored
