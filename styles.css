@@ -99,7 +99,6 @@
     top: 110px;
     width: 150px;
     color: white;
-
 }
 .points-bet-wrapper__bet{
     margin-bottom: 10px;
@@ -162,7 +161,7 @@ margin-right: 10px;
         opacity: 0;
     }
     100%{
-        opacity: 1s;
+        opacity: 1;
     }
 }
 

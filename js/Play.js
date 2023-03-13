@@ -77,18 +77,15 @@ class Play {
                         window.document.getElementById("points-won").innerHTML = that.cost_scored
                         document.getElementById("points-bet-wrapper__points--player-points").innerHTML = window.points
                         window.document.getElementById("points-bet-wrapper__won-flash").classList.add("points-bet-wrapper__won-flash__animate")
-                    }
-                    
+                    }  
                 }
             }
         })
         return that.cost_scored
-    
     }
 
     isCollision(peg_x, peg_y, peg_r, pink_ball_x, pink_ball_y, pink_ball_r) {
         let squareDistance = (peg_x-pink_ball_x)*(peg_x-pink_ball_x) + (peg_y-pink_ball_y)*(peg_y-pink_ball_y);
-
         return squareDistance <= ((peg_r + pink_ball_r) * (peg_r + pink_ball_r))
     }
 
