@@ -11,6 +11,7 @@ class Play {
         this.bet = bet
     }
 
+    //Start game
     start() {
         window.document.getElementById("points-bet-wrapper__won-flash").classList.remove("points-bet-wrapper__won-flash__animate")
         this.pinkBall.x = this.opening.x + (5 * this.fraction);
@@ -28,10 +29,6 @@ class Play {
         this.app.ticker.add(function(){
             that.pinkBall.y += that.pinkBall.vy
             that.pinkBall.vy += 0.8
-            // if(this.pinkBall.y > app.view.height - 50){
-            //     this.pinkBall.vy *= -0.5
-            //     this.pinkBall.y += this.pinkBall.vy
-            // }
     
             for(let pegIndx = 0; pegIndx < that.pegs.length; pegIndx++){
                 
@@ -55,12 +52,12 @@ class Play {
                     if(randomTurn === 0){
                         that.pinkBall.x -= that.pinkBall.vx
                     }
+
                     else if(randomTurn === 1){
                         that.pinkBall.x += that.pinkBall.vx
                     }
     
                     break;
-                    
                 }
             }
             
@@ -81,17 +78,20 @@ class Play {
                 }
             }
         })
-        return that.cost_scored
     }
 
+    //Checking of there's a collisiong between two objects
     isCollision(peg_x, peg_y, peg_r, pink_ball_x, pink_ball_y, pink_ball_r) {
         let squareDistance = (peg_x-pink_ball_x)*(peg_x-pink_ball_x) + (peg_y-pink_ball_y)*(peg_y-pink_ball_y);
         return squareDistance <= ((peg_r + pink_ball_r) * (peg_r + pink_ball_r))
     }
 
+    //Calculate and return the cost scored
     getCostScored(bet, slot_cost){
         return bet * slot_cost;
     }
+
+    //Rounding to two decimal places
     roundToTwoDecimal(num) {
         return +(Math.round(num + "e+2")  + "e-2");
     }

@@ -6,20 +6,27 @@ var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
 
 window.onload = function () {
+
+    //Creating a canvas for the game
     let app = new PIXI.Application({
         height: 700,
         backgroundColor: 0x1496c,
     });
 
+    //Add the canvas in the document
+    document.getElementById("canvas").appendChild(app.view);
+
+    //adding a background music to the game
     let music = new Audio("./Sound Effects/background_music.mp3")
     music.loop = true
     music.volume = 0.1
-    
+
+    //Activating the background music to start play when user interacts with the screen
     document.body.addEventListener("mousemove", () => {music.play()})
 
-    document.getElementById("canvas").appendChild(app.view);
 
-    let initial_level = 8; // Initial lines
+    let initial_level = 8; // Initial lines when the game gets booted.
+
 
     let slot_costs_list = [
         [5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6], // 8 lines slot costs
@@ -39,10 +46,10 @@ window.onload = function () {
 
         let slot_costs = slot_costs_list[levels - 8];
 
-        pegs = [];
-        slots = [];
+        pegs = []; //keeping track of the pegs in the game
+        slots = []; //keeping track of the slots in the ga,e
 
-        fraction = 7 / lines;
+        fraction = 7 / lines; // amount to shrink the game objects by when we increase the number of lines
 
         let space_bottom = 150 * fraction;
 
@@ -108,18 +115,20 @@ window.onload = function () {
 
     setup(initial_level);   
 
-    app.stage.interactive = true;
+    app.stage.interactive = true; // making the stage to be interactive
 
+    //adding event listerners to all lines options to be able to create a new board with different beg lines
     document.querySelectorAll("#canvas-option_div").forEach((op) => {
         op.addEventListener("click", function (e) {
-            let new_level = e.target.innerHTML;
-            destroyApp();
-            setup(Number(new_level));
+            let new_level = e.target.innerHTML; //getting a new line number
+            destroyApp(); // destroying the old board
+            setup(Number(new_level)); // setting up a new board
         });
     });
 
     document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
 
+    // adding event listener for increasing bet number
     document.getElementById("points-bet-wrapper__bet--increase").addEventListener("click", () => {
         if(points > bet){
             bet += 1.00;
@@ -127,6 +136,7 @@ window.onload = function () {
         }
     })
 
+    // adding event listener for decreasing bet number
     document.getElementById("points-bet-wrapper__bet--decrease").addEventListener("click", () => {
         if(bet > 1.00){
             bet -= 1.00;
@@ -134,6 +144,7 @@ window.onload = function () {
         }
     })
 
+    // adding event listener on the play button to play the game.
     document.getElementById("play-button").addEventListener("click", () => {
         if(points > 0 && bet <= points){
             points -= bet
