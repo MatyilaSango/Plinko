@@ -4,17 +4,16 @@
     padding: 0;
     margin: 0;
 }
+body{
+    background-image: url(images/Plinko_background.jpeg);
+}
 .game-wrapper{
     min-height: 100vh;
     min-width: 800px;
     width: 100vw;
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
-    background-image: url("images/Plinko_background.jpeg");
-    background-repeat: no-repeat;
-    object-fit: cover;
-    
+    justify-content: center;   
 }
 .heading{
     display: flex;
