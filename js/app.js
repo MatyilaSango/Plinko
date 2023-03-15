@@ -13,7 +13,7 @@ window.onload = function () {
 
     let music = new Audio("./Sound Effects/background_music.mp3")
     music.loop = true
-    music.volume = 0.2
+    music.volume = 0.1
     
     document.body.addEventListener("mousemove", () => {music.play()})
 
