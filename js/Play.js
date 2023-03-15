@@ -1,6 +1,6 @@
 class Play {
 
-    constructor(opening, app, fraction, pegs, slots, bet, pixiPegs){
+    constructor(opening, app, fraction, pegs, slots, bet){
         this.opening = opening
         this.app = app
         this.fraction = fraction
@@ -9,7 +9,6 @@ class Play {
         this.pinkBall = PIXI.Sprite.from(`./images/pink_ball.png`);
         this.cost_scored = 0
         this.bet = bet
-        this.pixiPegs = pixiPegs
     }
 
     start() {
@@ -41,11 +40,6 @@ class Play {
                     //play sound effect
                     let collisionSoundEffect = new Audio("./Sound Effects/collisionEffect.wav")
                     collisionSoundEffect.play()
-
-                    that.pixiPegs[pegIndx].tint = 0xFF00C3
-                    setTimeout(() => {
-                        that.pixiPegs[pegIndx].tint = 0xffffff
-                    }, 100)
     
                     let current_peg = that.pegs[pegIndx]
     
