@@ -1,6 +1,7 @@
 var fraction; //Amount to shrink the pegs and solts by when increasing number of lines
 var slots = []; //Store slots objects
 var pegs = []; //Store pegs objects
+var pixiPegs = [];
 var opening; //Store the openning
 var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
@@ -63,6 +64,7 @@ window.onload = function () {
                 app.stage.addChild(new_beg);
 
                 pegs.push(beg_obj);
+                pixiPegs.push(new_beg)
                 space_left += 100 * fraction;
             }
 
@@ -139,7 +141,7 @@ window.onload = function () {
             points -= bet
             points = roundToTwoDecimal(points)
             document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
-            new Play(opening, app, fraction, pegs, slots, bet).start()
+            new Play(opening, app, fraction, pegs, slots, bet, pixiPegs).start()
         }
     })
 };
