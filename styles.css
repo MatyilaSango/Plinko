@@ -286,4 +286,13 @@ body {
         width: 800px;
         height: 100%;
     }
+    .game-info-wrapper-infomation p{
+        font-size: 30px;
+    }
+    .game-info-wrapper-infomation h1{
+        font-size: 35px;
+    }
+    .game-info-wrapper-infomation h3{
+        font-size: 32px;
+    }
 }
