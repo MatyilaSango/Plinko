@@ -280,3 +280,10 @@ body {
         opacity: 1;
     }
 }
+
+@media screen and (max-width: 800px) {
+    .game-info-wrapper{
+        width: 800px;
+        height: 100%;
+    }
+}
