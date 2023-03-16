@@ -4,7 +4,7 @@ var pegs = []; //Store pegs objects
 var opening; //Store the openning
 var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
-let currentSelectedLines = 8 
+let currentSelectedLines = 8
 let music;
 
 window.onload = function () {
@@ -24,7 +24,7 @@ window.onload = function () {
     music.volume = 0.2
 
     //Activating the background music to start play when user interacts with the screen
-    document.body.addEventListener("mousemove", () => {music.play()})
+    document.body.addEventListener("mousemove", () => { music.play() })
 
 
     let initial_level = 8; // Initial lines when the game gets booted.
@@ -80,8 +80,8 @@ window.onload = function () {
 
         //adding slots into the stage
         for (let s = 0; s < slot_costs.length; s++) {
-            let temp_bottom_peg = pegs[pegs.length-1 - slot_costs.length + s] // taking each bottom peg so its x can be used as a referrence point for each slot
-            let slot_obj = new Slot(temp_bottom_peg.x + temp_bottom_peg.width * fraction , (space_bottom), 0, (55 - lines), (50 - lines), slot_costs[s]);
+            let temp_bottom_peg = pegs[pegs.length - 1 - slot_costs.length + s] // taking each bottom peg so its x can be used as a referrence point for each slot
+            let slot_obj = new Slot(temp_bottom_peg.x + temp_bottom_peg.width * fraction, (space_bottom), 0, (55 - lines), (50 - lines), slot_costs[s]);
             let new_slot = slot_obj.create();
 
             app.stage.addChild(new_slot);
@@ -112,10 +112,10 @@ window.onload = function () {
 
     //To round to two decimal
     function roundToTwoDecimal(num) {
-        return +(Math.round(num + "e+2")  + "e-2");
+        return +(Math.round(num + "e+2") + "e-2");
     }
 
-    setup(initial_level);   
+    setup(initial_level);
 
     app.stage.interactive = true; // making the stage to be interactive
 
@@ -130,7 +130,7 @@ window.onload = function () {
             //setting the background of a selected line
             canvas_option_divs.forEach(line_number => {
                 line_number.classList.remove("selected-line")
-                if(new_level === line_number.innerHTML){
+                if (new_level === line_number.innerHTML) {
                     line_number.classList.add("selected-line")
                 }
             })
@@ -141,7 +141,7 @@ window.onload = function () {
 
     // adding event listener for increasing bet number
     document.getElementById("points-bet-wrapper__bet--increase").addEventListener("click", () => {
-        if(points > bet){
+        if (points > bet) {
             bet += 1.00;
             document.getElementById("points-bet-wrapper__bet--amount").innerHTML = `${bet}.00`;
         }
@@ -149,7 +149,7 @@ window.onload = function () {
 
     // adding event listener for decreasing bet number
     document.getElementById("points-bet-wrapper__bet--decrease").addEventListener("click", () => {
-        if(bet > 1.00){
+        if (bet > 1.00) {
             bet -= 1.00;
             document.getElementById("points-bet-wrapper__bet--amount").innerHTML = `${bet}.00`;
         }
@@ -157,7 +157,7 @@ window.onload = function () {
 
     // adding event listener on the play button to play the game.
     document.getElementById("play-button").addEventListener("click", () => {
-        if(points > 0 && bet <= points){
+        if (points > 0 && bet <= points) {
             points -= bet
             points = roundToTwoDecimal(points)
             document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
@@ -167,11 +167,16 @@ window.onload = function () {
 
     // adding event listener to play when tab is vissible
     document.addEventListener("visibilitychange", () => {
-        if(document.visibilityState === "visible"){
+        if (document.visibilityState === "visible") {
             music.play()
         }
-        else{
+        else {
             music.pause()
         }
     })
+
+    //
+    document.getElementById("start-button-wrapper__button").addEventListener("click", () => {
+        document.getElementById("game-info-wrapper").remove()
+    })   
 };

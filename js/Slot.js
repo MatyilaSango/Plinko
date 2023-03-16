@@ -1,5 +1,5 @@
 class Slot {
-    constructor( x, y, anchor, width, height, cost){
+    constructor(x, y, anchor, width, height, cost) {
         this.x = x;
         this.y = y;
         this.anchor = anchor;
@@ -8,16 +8,18 @@ class Slot {
         this.cost = cost
         this.anchor = 0
         this.radius = 0
+        this.slot = null
     }
 
-    create(){
-        let peg = PIXI.Sprite.from(`./images/${this.cost}.png`);
-        peg.anchor.set(this.anchor);
-        peg.x = this.x;
-        peg.y = this.y;
-        peg.width = this.width;
-        peg.height = this.height
+    create() {
+        let slot = PIXI.Sprite.from(`./images/${this.cost}.png`);
+        slot.anchor.set(this.anchor);
+        slot.x = this.x;
+        slot.y = this.y;
+        slot.width = this.width;
+        slot.height = this.height
+        this.slot = slot
 
-        return peg;
+        return slot;
     }
 }

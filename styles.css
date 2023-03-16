@@ -215,6 +215,10 @@ body {
     overflow-y: scroll;
 }
 
+#game-history-table-body tr td:nth-child(4) {
+    padding-left: 50px;
+}
+
 .td-lost {
     background-color: #f6a50320;
 }
@@ -222,6 +226,46 @@ body {
 .td-won {
     background-color: rgba(0, 128, 0, 0.5);
 }
+
+.game-info-wrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-info-wrapper-infomation{
+    width: 700px;
+    height: 700px;
+    color: white;
+    font-style: italic;
+}
+.start-button-wrapper{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+.start-button-wrapper button{
+    height: 40px;
+    width: 100px;
+    background-color: rgba(0, 187, 255, 0.9);
+    border-radius: 15px;
+    border: none;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+.start-button-wrapper button:active{
+    background-color: rgba(142, 223, 252, 0.9);
+}
+
+.start-button-wrapper button:hover{
+    background-color: rgba(0, 187, 255, 0.5);
+}
+
 
 @keyframes flashWon {
     0% {
