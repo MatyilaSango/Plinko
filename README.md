@@ -16,7 +16,7 @@ The game has become a classic staple of many game shows and has entertained mill
 Just need only a javascript runtime environment.
 
 ## Deployment
-Deplyod on vercel: [gg-plinko](gg-plinko.vercel.app)
+Deployed on vercel: [gg-plinko](gg-plinko.vercel.app)
 
 ## Author
 [Sango Matyila](https://www.linkedin.com/in/sango-matyila-b1584a237)
