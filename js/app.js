@@ -5,6 +5,7 @@ var opening; //Store the openning
 var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
 let currentSelectedLines = 8 
+let music;
 
 window.onload = function () {
 
@@ -18,7 +19,7 @@ window.onload = function () {
     document.getElementById("canvas").appendChild(app.view);
 
     //adding a background music to the game
-    let music = new Audio("./Sound Effects/background_music.mp3")
+    music = new Audio("./Sound Effects/background_music.mp3")
     music.loop = true
     music.volume = 0.2
 
@@ -161,6 +162,16 @@ window.onload = function () {
             points = roundToTwoDecimal(points)
             document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
             new Play(opening, app, fraction, pegs, slots, bet).start()
+        }
+    })
+
+    // adding event listener to play when tab is vissible
+    document.addEventListener("visibilitychange", () => {
+        if(document.visibilityState === "visible"){
+            music.play()
+        }
+        else{
+            music.pause()
         }
     })
 };
