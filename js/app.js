@@ -20,7 +20,7 @@ window.onload = function () {
     //adding a background music to the game
     let music = new Audio("./Sound Effects/background_music.mp3")
     music.loop = true
-    music.volume = 0.1
+    music.volume = 0.2
 
     //Activating the background music to start play when user interacts with the screen
     document.body.addEventListener("mousemove", () => {music.play()})

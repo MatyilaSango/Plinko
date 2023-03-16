@@ -9,6 +9,8 @@ class Play {
         this.pinkBall = PIXI.Sprite.from(`./images/pink_ball.png`);
         this.cost_scored = 0
         this.bet = bet
+        this.time = Date().split(" ")[4]
+        this.slotCost = 0
     }
 
     //Start game
@@ -36,6 +38,7 @@ class Play {
     
                     //play sound effect
                     let collisionSoundEffect = new Audio("./Sound Effects/collisionEffect.wav")
+                    collisionSoundEffect.volume = 0.2
                     collisionSoundEffect.play()
     
                     let current_peg = that.pegs[pegIndx]
@@ -68,12 +71,32 @@ class Play {
                     scoredSoundEffect.volume = 0.2
                     scoredSoundEffect.play()
                     if(that.cost_scored === 0){
-                        that.cost_scored = that.roundToTwoDecimal( that.getCostScored(that.bet, that.slots[slotIndx].cost) )
+                        that.slotCost = that.slots[slotIndx].cost
+                        that.cost_scored = that.roundToTwoDecimal( that.getCostScored(that.bet, that.slotCost ) )
                         window.points += that.cost_scored
                         window.points = that.roundToTwoDecimal(window.points)
                         window.document.getElementById("points-won").innerHTML = that.cost_scored
                         document.getElementById("points-bet-wrapper__points--player-points").innerHTML = window.points
                         window.document.getElementById("points-bet-wrapper__won-flash").classList.add("points-bet-wrapper__won-flash__animate")
+                        window.document.getElementById("game-history-table-body").innerHTML += 
+                            `<tr>
+                                <td colspan="1">${that.time}</td>
+                                <td>${that.bet}</td>
+                                <td>${that.slotCost}x</td>
+                                ${(that.cost_scored > that.bet) 
+                                ?  
+                                `<td class="td-won">+${that.cost_scored}</td>`
+                                :
+                                (that.cost_scored < that.bet)
+                                ?
+                                `<td class="td-lost">-${that.cost_scored}</td>`
+                                :
+                                `<td>${that.cost_scored}</td>`
+                                }
+                            </tr>`
+                            
+                        let tableWrapper = window.document.getElementById("table-wrapper")
+                        tableWrapper.scrollTop = tableWrapper.scrollHeight
                     }  
                 }
             }
