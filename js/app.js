@@ -4,6 +4,7 @@ var pegs = []; //Store pegs objects
 var opening; //Store the openning
 var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
+let currentSelectedLines = 8 
 
 window.onload = function () {
 
@@ -118,11 +119,20 @@ window.onload = function () {
     app.stage.interactive = true; // making the stage to be interactive
 
     //adding event listerners to all lines options to be able to create a new board with different beg lines
-    document.querySelectorAll("#canvas-option_div").forEach((op) => {
+    let canvas_option_divs = document.querySelectorAll("#canvas-option_div")
+    canvas_option_divs.forEach((op) => {
         op.addEventListener("click", function (e) {
             let new_level = e.target.innerHTML; //getting a new line number
             destroyApp(); // destroying the old board
             setup(Number(new_level)); // setting up a new board
+
+            //setting the background of a selected line
+            canvas_option_divs.forEach(line_number => {
+                line_number.classList.remove("selected-line")
+                if(new_level === line_number.innerHTML){
+                    line_number.classList.add("selected-line")
+                }
+            })
         });
     });
 

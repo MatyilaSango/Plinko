@@ -41,6 +41,9 @@ body{
 }
 #canvas{
     position: relative;
+    border-radius: 50px;
+    overflow: hidden;
+    height: fit-content;
 }
 .canvas-options{
     position: absolute;
@@ -54,9 +57,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1F5282;
+    border-radius: 10px;
     height: 30px;
     box-shadow: 0 0 10px  black;
+}
+.selected-line{
+    background-color: #6698db;
 }
 .canvas-options div:hover{
     background-color: #6B85A6;
