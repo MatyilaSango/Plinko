@@ -41,12 +41,10 @@ class Play {
                         that.pegs[pegIndx].pegBall.tint = 0xffffff
                     }, 100)
 
-                    //play sound effect
                     let collisionSoundEffect = new Audio("./Sound Effects/collisionEffect.wav")
                     collisionSoundEffect.volume = 0.2
                     collisionSoundEffect.play()
 
-                    //storing the current
                     let current_peg = that.pegs[pegIndx]
 
                     that.pinkBall.vy *= -0.5
@@ -85,7 +83,7 @@ class Play {
                         document.getElementById("points-bet-wrapper__points--player-points").innerHTML = window.points
                         window.document.getElementById("points-bet-wrapper__won-flash").classList.add("points-bet-wrapper__won-flash__animate")
 
-                        //adding game history table
+
                         window.document.getElementById("game-history-table-body").innerHTML +=
                             `<tr>
                                 <td colspan="1">${that.time}</td>
@@ -103,11 +101,9 @@ class Play {
                             }
                             </tr>`
 
-                        //adding automatic strolling
                         let tableWrapper = window.document.getElementById("table-wrapper");
                         tableWrapper.scrollTop = tableWrapper.scrollHeight;
 
-                        //animating slot on drop
                         that.slots[slotIndx].slot.y += 10
                         setTimeout(() => {
                             that.slots[slotIndx].slot.y -= 10
