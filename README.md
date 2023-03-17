@@ -13,7 +13,7 @@ It is often used as a fun and entertaining way to give away prizes or determine 
 The game has become a classic staple of many game shows and has entertained millions of viewers for decades.
 
 ## Preview
-![Screenshot 2023-03-16 at 17 22 46](https://user-images.githubusercontent.com/60422984/225664711-bef0aa9f-ef93-49f7-ab9f-f707a886377e.png)
+![Screenshot 2023-03-17 at 11 23 03](https://user-images.githubusercontent.com/60422984/225864773-a7b52da0-a80a-40a4-a46d-4904b749344d.png)
 
 
 ## Requirements
