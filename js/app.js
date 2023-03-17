@@ -175,6 +175,7 @@ window.onload = function () {
         }
     })
 
+    document.getElementById("game-info-wrapper").style.height =`${document.body.scrollHeight}`
     //Removing game info on button start clicked
     document.getElementById("start-button-wrapper__button").addEventListener("click", () => {
         document.getElementById("game-info-wrapper").remove()
