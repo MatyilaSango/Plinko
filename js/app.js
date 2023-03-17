@@ -1,5 +1,17 @@
 var fraction; //Amount to shrink the pegs and solts by when increasing number of lines
 var slots = []; //Store slots objects
+let initial_level = 8; // Initial game lines.
+let slot_costs_list = [
+    [5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6], // 8 lines slot costs
+    [5.6, 2, 1.6, 1, 0.7, 0.7, 1, 1.6, 2, 5.6], // 9 lines slot costs
+    [8.9, 3, 1.1, 1.1, 1, 0.5, 1, 1.1, 1.4, 3, 8.9], // 10 lines slot costs
+    [8.4, 3, 1.9, 1.3, 1, 0.7, 0.7, 1, 1.3, 1.9, 3, 8.4], // 11 lines slot costs
+    [10, 3, 1.6, 1.4, 1.1, 1, 0.5, 1, 1.1, 1.4, 1.6, 3, 10], // 12 lines slot costs
+    [8.1, 4, 3, 1.9, 1.2, 0.9, 0.7, 0.7, 0.9, 1.2, 1.9, 3, 4, 8.1], // 13 lines slot costs
+    [7.1, 4, 1.9, 1.4, 1.3, 1.1, 1, 0.5, 1, 1.1, 1.3, 1.4, 1.9, 4, 7.1], // 14 lines slot costs
+    [15, 8, 3, 2, 1.5, 1.1, 1, 0.7, 0.7, 1, 1.1, 1.5, 2, 3, 8, 15], // 15 lines slot costs
+    [16, 9, 2, 1.4, 1.4, 1.2, 1.1, 1, 0.5, 1, 1.1, 1.2, 1.4, 1.4, 2, 9, 16], // 16 lines slot costs
+];
 var pegs = []; //Store pegs objects
 var opening; //Store the openning
 var bet = 1.00; //Bet amount
@@ -14,29 +26,7 @@ window.onload = function () {
         backgroundColor: 0x1496c,
     });
 
-    document.getElementById("canvas").appendChild(app.view);
-
-    music = new Audio("./Sound Effects/background_music.mp3")
-    music.loop = true
-    music.volume = 0.2
-
-    document.body.addEventListener("mousemove", () => { music.play() })
-
-
-    let initial_level = 8; // Initial game lines.
-
-
-    let slot_costs_list = [
-        [5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6], // 8 lines slot costs
-        [5.6, 2, 1.6, 1, 0.7, 0.7, 1, 1.6, 2, 5.6], // 9 lines slot costs
-        [8.9, 3, 1.1, 1.1, 1, 0.5, 1, 1.1, 1.4, 3, 8.9], // 10 lines slot costs
-        [8.4, 3, 1.9, 1.3, 1, 0.7, 0.7, 1, 1.3, 1.9, 3, 8.4], // 11 lines slot costs
-        [10, 3, 1.6, 1.4, 1.1, 1, 0.5, 1, 1.1, 1.4, 1.6, 3, 10], // 12 lines slot costs
-        [8.1, 4, 3, 1.9, 1.2, 0.9, 0.7, 0.7, 0.9, 1.2, 1.9, 3, 4, 8.1], // 13 lines slot costs
-        [7.1, 4, 1.9, 1.4, 1.3, 1.1, 1, 0.5, 1, 1.1, 1.3, 1.4, 1.9, 4, 7.1], // 14 lines slot costs
-        [15, 8, 3, 2, 1.5, 1.1, 1, 0.7, 0.7, 1, 1.1, 1.5, 2, 3, 8, 15], // 15 lines slot costs
-        [16, 9, 2, 1.4, 1.4, 1.2, 1.1, 1, 0.5, 1, 1.1, 1.2, 1.4, 1.4, 2, 9, 16], // 16 lines slot costs
-    ];
+    app.stage.interactive = true;
 
     function setup(levels) {
         let lines = 2 + levels;
@@ -105,7 +95,13 @@ window.onload = function () {
 
     setup(initial_level);
 
-    app.stage.interactive = true;
+    document.getElementById("canvas").appendChild(app.view);
+
+    music = new Audio("./Sound Effects/background_music.mp3")
+    music.loop = true
+    music.volume = 0.2
+
+    document.body.addEventListener("mousemove", () => { music.play() })
 
     let canvas_option_divs = document.querySelectorAll("#canvas-option_div")
     canvas_option_divs.forEach((op) => {

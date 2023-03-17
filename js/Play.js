@@ -114,18 +114,15 @@ class Play {
         })
     }
 
-    //Checking of there's a collisiong between two objects
-    isCollision(peg_x, peg_y, peg_r, pink_ball_x, pink_ball_y, pink_ball_r) {
-        let squareDistance = (peg_x - pink_ball_x) * (peg_x - pink_ball_x) + (peg_y - pink_ball_y) * (peg_y - pink_ball_y);
-        return squareDistance <= ((peg_r + pink_ball_r) * (peg_r + pink_ball_r))
+    isCollision(peg_x, peg_y, peg_r, ball_x, ball_y, ball_r) {
+        let squareDistance = (peg_x - ball_x) * (peg_x - ball_x) + (peg_y - ball_y) * (peg_y - ball_y);
+        return squareDistance <= ((peg_r + ball_r) * (peg_r + ball_r))
     }
 
-    //Calculate and return the cost scored
     getCostScored(bet, slot_cost) {
         return bet * slot_cost;
     }
 
-    //Rounding to two decimal places
     roundToTwoDecimal(num) {
         return +(Math.round(num + "e+2") + "e-2");
     }
