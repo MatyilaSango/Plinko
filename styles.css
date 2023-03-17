@@ -291,7 +291,11 @@ body {
 @media screen and (max-width: 800px) {
     .game-info-wrapper{
         width: 800px;
-        height: 100%;
+        height: 150%;
+    }
+    .game-info-wrapper-infomation{
+        position: relative;
+        top: -100px;
     }
     .game-info-wrapper-infomation p{
         font-size: 30px;
@@ -301,5 +305,5 @@ body {
     }
     .game-info-wrapper-infomation h3{
         font-size: 32px;
-    }
+    } 
 }
