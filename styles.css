@@ -29,7 +29,7 @@ body {
     background-color: #0c1f3f;
 }
 
-.heading img {
+.gg-logo {
     position: relative;
     left: -190px;
 }
@@ -234,9 +234,10 @@ body {
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
+
 }
 
 .game-info-wrapper-infomation{
@@ -267,7 +268,11 @@ body {
 .start-button-wrapper button:hover{
     background-color: rgba(0, 187, 255, 0.5);
 }
-
+.info-logo{
+    position: relative;
+    right: -180px;
+    cursor: pointer;
+}
 
 @keyframes flashWon {
     0% {
