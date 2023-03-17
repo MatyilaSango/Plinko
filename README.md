@@ -17,6 +17,7 @@ The game has become a classic staple of many game shows and has entertained mill
 
 
 ## Requirements
+Developed using Javascript and Pixijs.
 Just need only a javascript runtime environment.
 
 ## Deployment
