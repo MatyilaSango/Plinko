@@ -13,11 +13,269 @@ let slot_costs_list = [
     [16, 9, 2, 1.4, 1.4, 1.2, 1.1, 1, 0.5, 1, 1.1, 1.2, 1.4, 1.4, 2, 9, 16], // 16 lines slot costs
 ];
 var pegs = []; //Store pegs objects
-var opening; //Store the openning
+var openning; //Store the openning
 var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
-let currentSelectedLines = 8
 let music;
+
+/**
+ * Class peg represent a peg in the board
+ */
+class Peg {
+
+    /**
+     * Creates an instance of the Peg.
+     * 
+     * @param {number} x The x postion
+     * @param {number} y They y position
+     * @param {number} anchor The anchor position
+     * @param {number} width The width of the peg
+     * @param {number} height The height of the peg 
+     * @param {*number} radius The radius of the peg
+     */
+    constructor(x, y, anchor, width, height, radius) {
+        this.x = x;
+        this.y = y;
+        this.anchor = anchor;
+        this.width = width;
+        this.height = height
+        this.radius = radius
+        this.pegBall = null
+    }
+
+    /**
+     * Creates a new peg
+     * 
+     * @returns new peg
+     */
+    create() {
+        let peg = PIXI.Sprite.from("./images/circle.png");
+        peg.anchor.set(this.anchor);
+        peg.x = this.x;
+        peg.y = this.y;
+        peg.width = this.width
+        peg.height = this.height
+
+        this.pegBall = peg
+
+        return peg;
+    }
+}
+
+/**
+ * Class Slot represent a slot in the board
+ */
+class Slot {
+
+    /**
+     * Creates an instance of the Slot.
+     * 
+     * @param {number} x The x postion
+     * @param {number} y They y position
+     * @param {number} anchor The anchor position
+     * @param {number} width The width of the slot
+     * @param {number} height The height of the slot
+     * @param {number} cost The slot cost
+     */
+    constructor(x, y, anchor, width, height, cost) {
+        this.x = x;
+        this.y = y;
+        this.anchor = anchor;
+        this.width = width;
+        this.height = height
+        this.cost = cost
+        this.anchor = 0
+        this.radius = 0
+        this.slot = null
+    }
+
+    /**
+     * Creates a new slot
+     * 
+     * @returns new slot
+     */
+    create() {
+        let slot = PIXI.Sprite.from(`./images/${this.cost}.png`);
+        slot.anchor.set(this.anchor);
+        slot.x = this.x;
+        slot.y = this.y;
+        slot.width = this.width;
+        slot.height = this.height
+        this.slot = slot
+
+        return slot;
+    }
+}
+
+/**
+ * Class Play plays the game
+ */
+class Play {
+
+    /**
+     * Creates an instance of Play for each ball being played.
+     * 
+     * @param {number} openning Openning
+     * @param {number} app App
+     * @param {number} fraction Fraction
+     * @param {number} pegs Pegs
+     * @param {number} slots Slots
+     * @param {number} bet Bet
+     */
+    constructor(openning, app, fraction, pegs, slots, bet) {
+        this.openning = openning
+        this.app = app
+        this.fraction = fraction
+        this.pegs = pegs
+        this.slots = slots
+        this.pinkBall = PIXI.Sprite.from(`./images/pink_ball.png`);
+        this.cost_scored = 0
+        this.bet = bet
+        this.time = Date().split(" ")[4]
+        this.slotCost = 0
+    }
+
+    /**
+     * Plays the game for each new ball and keeps track of it throughout its lifespan.
+     * 
+     */
+    start() {
+        window.document.getElementById("points-bet-wrapper__won-flash").classList.remove("points-bet-wrapper__won-flash__animate")
+        this.pinkBall.x = this.openning.x + (5 * this.fraction);
+        this.pinkBall.y = this.openning.y;
+        this.pinkBall.width = 35 * this.fraction;
+        this.pinkBall.height = 35 * this.fraction;
+        this.pinkBall.vy = 0;
+        this.pinkBall.vx = 0;
+        this.app.stage.addChild(this.pinkBall);
+
+        let last_peg = undefined;
+        let randomTurn = Math.floor(Math.random() * 2);
+
+        let that = this
+        this.app.ticker.add(function () {
+            that.pinkBall.y += that.pinkBall.vy
+            that.pinkBall.vy += 0.8
+
+            for (let pegIndx = 0; pegIndx < that.pegs.length; pegIndx++) {
+
+                if (that.isCollision(that.pegs[pegIndx].x - (1 * that.fraction), that.pegs[pegIndx].y, that.pegs[pegIndx].radius, that.pinkBall.x, that.pinkBall.y, that.pinkBall.width / 2)) {
+
+                    that.pegs[pegIndx].pegBall.tint = 0xF101C4
+                    setTimeout(() => {
+                        that.pegs[pegIndx].pegBall.tint = 0xffffff
+                    }, 100)
+
+                    let collisionSoundEffect = new Audio("./Sound Effects/collisionEffect.wav")
+                    collisionSoundEffect.volume = 0.2
+                    collisionSoundEffect.play()
+
+                    let current_peg = that.pegs[pegIndx]
+
+                    that.pinkBall.vy *= -0.5
+                    that.pinkBall.y += that.pinkBall.vy
+                    that.pinkBall.vx = 9 * that.fraction
+
+                    if (current_peg != last_peg) {
+                        randomTurn = Math.floor(Math.random() * 2);
+                        last_peg = current_peg
+                    }
+
+                    if (randomTurn === 0) {
+                        that.pinkBall.x -= that.pinkBall.vx
+                    }
+
+                    else if (randomTurn === 1) {
+                        that.pinkBall.x += that.pinkBall.vx
+                    }
+
+                    break;
+                }
+            }
+
+            for (let slotIndx = 0; slotIndx < that.slots.length; slotIndx++) {
+                if (that.isCollision(that.slots[slotIndx].x, that.slots[slotIndx].y + 40, that.slots[slotIndx].width / 2, that.pinkBall.x, that.pinkBall.y, that.pinkBall.width / 2)) {
+                    that.app.stage.removeChild(that.pinkBall)
+                    let scoredSoundEffect = new Audio("./Sound Effects/scoreEffect.wav")
+                    scoredSoundEffect.volume = 0.2
+                    scoredSoundEffect.play()
+                    if (that.cost_scored === 0) {
+                        that.slotCost = that.slots[slotIndx].cost
+                        that.cost_scored = that.roundToTwoDecimal(that.getCostScored(that.bet, that.slotCost))
+                        window.points += that.cost_scored
+                        window.points = that.roundToTwoDecimal(window.points)
+                        window.document.getElementById("points-won").innerHTML = that.cost_scored
+                        document.getElementById("points-bet-wrapper__points--player-points").innerHTML = window.points
+                        window.document.getElementById("points-bet-wrapper__won-flash").classList.add("points-bet-wrapper__won-flash__animate")
+
+
+                        window.document.getElementById("game-history-table-body").innerHTML +=
+                            `<tr>
+                                <td colspan="1">${that.time}</td>
+                                <td>${that.bet}</td>
+                                <td>${that.slotCost}x</td>
+                                ${(that.cost_scored > that.bet)
+                                ?
+                                `<td class="td-won">+${that.cost_scored}</td>`
+                                :
+                                (that.cost_scored < that.bet)
+                                    ?
+                                    `<td class="td-lost">-${that.cost_scored}</td>`
+                                    :
+                                    `<td>${that.cost_scored}</td>`
+                            }
+                            </tr>`
+
+                        let tableWrapper = window.document.getElementById("table-wrapper");
+                        tableWrapper.scrollTop = tableWrapper.scrollHeight;
+
+                        that.slots[slotIndx].slot.y += 10
+                        setTimeout(() => {
+                            that.slots[slotIndx].slot.y -= 10
+                        }, 50);
+                    }
+                }
+            }
+        })
+    }
+
+    /**
+     * Detecting a collision between a beg and a ball.
+     * 
+     * @param {number} peg_x The x position of the peg.
+     * @param {number} peg_y The y position of the peg.
+     * @param {number} peg_r The radius of the peg.
+     * @param {number} ball_x The x position of the ball.
+     * @param {number} ball_y The y position of the ball.
+     * @param {number} ball_r The radius of the ball.
+     * @returns true of collision is detected or else false.
+     */
+    isCollision(peg_x, peg_y, peg_r, ball_x, ball_y, ball_r) {
+        let squareDistance = (peg_x - ball_x) * (peg_x - ball_x) + (peg_y - ball_y) * (peg_y - ball_y);
+        return squareDistance <= ((peg_r + ball_r) * (peg_r + ball_r))
+    }
+
+    /**
+     * Get amount of points won.
+     * 
+     * @param {number} bet The bet.
+     * @param {number} slot_cost The slot cost.
+     * @returns points/score.
+     */
+    getCostScored(bet, slot_cost) {
+        return bet * slot_cost;
+    }
+
+    /**
+     * Round value to two decimal places.
+     * 
+     * @param {nunber} num Value
+     * @returns rounded value.
+     */
+    roundToTwoDecimal(num) {
+        return +(Math.round(num + "e+2") + "e-2");
+    }
+}
 
 window.onload = function () {
 
@@ -69,13 +327,13 @@ window.onload = function () {
             slots.push(slot_obj);
         }
 
-        opening = PIXI.Sprite.from(`./images/bC.png`);
-        opening.anchor.set(0)
-        opening.x = pegs[1].x - (8 * fraction);
-        opening.y = (50 * fraction);
-        opening.width = 50 * fraction;
-        opening.height = 50 * fraction;
-        app.stage.addChild(opening);
+        openning = PIXI.Sprite.from(`./images/bC.png`);
+        openning.anchor.set(0)
+        openning.x = pegs[1].x - (8 * fraction);
+        openning.y = (50 * fraction);
+        openning.width = 50 * fraction;
+        openning.height = 50 * fraction;
+        app.stage.addChild(openning);
     }
 
     function destroyApp() {
@@ -140,7 +398,7 @@ window.onload = function () {
             points -= bet
             points = roundToTwoDecimal(points)
             document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
-            new Play(opening, app, fraction, pegs, slots, bet).start()
+            new Play(openning, app, fraction, pegs, slots, bet).start()
         }
     })
 
