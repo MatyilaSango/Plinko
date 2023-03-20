@@ -123,15 +123,24 @@ body {
     color: white;
 }
 
-.points-bet-wrapper__bet {
+.points-bet-wrapper__bet,
+.points-bet-wrapper__weight {
     margin-bottom: 10px;
     font-weight: 600;
     display: flex;
     align-items: center;
 }
+.points-bet-wrapper__weight{
+    margin-top: 10px;
+    border-top: 1px solid white;
+    padding-top: 10px;
+    margin-left: -10px;
+}
 
 .points-bet-wrapper__bet--increase,
-.points-bet-wrapper__bet--decrease {
+.points-bet-wrapper__bet--decrease,
+.points-bet-wrapper__weight--decrease,
+.points-bet-wrapper__weight--increase {
     background-color: #1f5282;
     width: 20px;
     height: 25px;
@@ -143,14 +152,25 @@ body {
     box-shadow: 0 0 10px black;
     cursor: pointer;
 }
+.points-bet-wrapper__weight--increase{
+    margin-left: 5px;
+}
 
-.points-bet-wrapper__bet--decrease {
+
+.points-bet-wrapper__bet--decrease,
+.points-bet-wrapper__weight--decrease {
     margin-left: 0;
     margin-right: 10px;
 }
+.points-bet-wrapper__weight--decrease{
+    margin-right: 0;
+    margin-left: 10px;
+}
 
 .points-bet-wrapper__bet--increase:active,
-.points-bet-wrapper__bet--decrease:active {
+.points-bet-wrapper__bet--decrease:active,
+.points-bet-wrapper__weight--increase:active,
+.points-bet-wrapper__weight--decrease:active {
     box-shadow: 0 0 0px black;
 }
 
@@ -213,6 +233,9 @@ body {
 .table-wrapper {
     height: 200px;
     overflow-y: scroll;
+}
+.table-wrapper::-webkit-scrollbar{
+    background-color: transparent;
 }
 
 #game-history-table-body tr td:nth-child(4) {

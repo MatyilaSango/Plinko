@@ -17,6 +17,9 @@ var openning; //Store the openning
 var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
 let music;
+var top_bounce =  0.5;
+var incr_weight_value = 0;
+var side_bounce = 4
 
 /**
  * Class peg represent a peg in the board
@@ -122,7 +125,7 @@ class Play {
      * @param {number} slots Slots
      * @param {number} bet Bet
      */
-    constructor(openning, app, fraction, pegs, slots, bet) {
+    constructor(openning, app, fraction, pegs, slots, bet, top_bounce, side_bounce) {
         this.openning = openning
         this.app = app
         this.fraction = fraction
@@ -133,6 +136,8 @@ class Play {
         this.bet = bet
         this.time = Date().split(" ")[4]
         this.slotCost = 0
+        this.top_bounce = top_bounce
+        this.side_bounce = side_bounce
     }
 
     /**
@@ -172,9 +177,10 @@ class Play {
 
                     let current_peg = that.pegs[pegIndx]
 
-                    that.pinkBall.vy *= -0.5
+                    that.pinkBall.vy *= -that.top_bounce
                     that.pinkBall.y += that.pinkBall.vy
-                    that.pinkBall.vx = 9 * that.fraction
+                    that.pinkBall.vx += that.side_bounce
+                    that.pinkBall.vx = that.pinkBall.vx * that.fraction
 
                     if (current_peg != last_peg) {
                         randomTurn = Math.floor(Math.random() * 2);
@@ -398,7 +404,7 @@ window.onload = function () {
             points -= bet
             points = roundToTwoDecimal(points)
             document.getElementById("points-bet-wrapper__points--player-points").innerHTML = points
-            new Play(openning, app, fraction, pegs, slots, bet).start()
+            new Play(openning, app, fraction, pegs, slots, bet, top_bounce, side_bounce).start()
         }
     })
 
@@ -417,6 +423,24 @@ window.onload = function () {
 
      document.getElementById("info-logo").addEventListener("click", () => {
         document.getElementById("game-info-wrapper").style.display = "flex"
+    })
+
+    document.getElementById("points-bet-wrapper__weight--increase").addEventListener("click", () => {
+        if (top_bounce <= 0.5 && top_bounce > 0.1) {
+            top_bounce -= 0.01;
+            side_bounce -= 0.05
+            incr_weight_value += 1
+            document.getElementById("points-bet-wrapper__weight--amount").innerHTML = `${50 + incr_weight_value}`;
+        }
+    })
+
+    document.getElementById("points-bet-wrapper__weight--decrease").addEventListener("click", () => {
+        if (top_bounce < 0.5 && top_bounce >= 0.0) {
+            top_bounce += 0.01;
+            side_bounce += 0.05
+            incr_weight_value -= 1
+            document.getElementById("points-bet-wrapper__weight--amount").innerHTML = `${50 + incr_weight_value}`;
+        }
     })
 
 };
