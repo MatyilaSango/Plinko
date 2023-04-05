@@ -63,6 +63,19 @@ body::-webkit-scrollbar-thumb{
     border-radius: 50px;
     overflow: hidden;
     height: fit-content;
+    animation: borderInOut linear 2s infinite;
+}
+
+@keyframes borderInOut {
+    0%{
+        box-shadow: 0 0 20px 10px transparent;
+    }
+    50%{
+        box-shadow: 0 0 20px 10px orange;
+    }
+    100%{
+        box-shadow: 0 0 20px 10px transparent;
+    }
 }
 
 .canvas-options {
