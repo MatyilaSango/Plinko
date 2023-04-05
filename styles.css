@@ -7,6 +7,17 @@
 
 body {
     background-image: url(images/Plinko_background.jpeg);
+    overflow-x: hidden;
+}
+
+body::-webkit-scrollbar{
+    background-color: #0c1f3f;
+    width: 10px;
+    height: 10px;
+}
+body::-webkit-scrollbar-thumb{
+    background-color: #6b85a6;
+    border-radius: 20px;
 }
 
 .game-wrapper {
@@ -252,18 +263,18 @@ body {
 
 .game-info-wrapper{
     width: 100%;
-    min-height: fit-content;
+    height: inherit;
     position: absolute;
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.9);
     display: none;
-    align-items: center;
     justify-content: center;
 }
 
 .game-info-wrapper-infomation{
     width: 700px;
+    height: fit-content;
     color: white;
     font-style: italic;
     margin-top: 20px;
@@ -315,13 +326,11 @@ body {
     .game-info-wrapper{
         width: 800px;
         height: 150%;
+        background-color: rgba(0, 0, 0, 0.9);
     }
     .game-info-wrapper-infomation{
         position: relative;
         top: -100px;
-    }
-    .game-info-wrapper-infomation p{
-        font-size: 30px;
     }
     .game-info-wrapper-infomation h1{
         font-size: 35px;
