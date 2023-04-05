@@ -257,8 +257,8 @@ class Play {
      * @returns true of collision is detected or else false.
      */
     isCollision(peg_x, peg_y, peg_r, ball_x, ball_y, ball_r) {
-        let squareDistance = (peg_x - ball_x) * (peg_x - ball_x) + (peg_y - ball_y) * (peg_y - ball_y);
-        return squareDistance <= ((peg_r + ball_r) * (peg_r + ball_r))
+        let circleDistance = (peg_x - ball_x) * (peg_x - ball_x) + (peg_y - ball_y) * (peg_y - ball_y);
+        return circleDistance <= ((peg_r + ball_r) * (peg_r + ball_r))
     }
 
     /**
@@ -292,6 +292,11 @@ window.onload = function () {
 
     app.stage.interactive = true;
 
+    /**
+     * Setting up the board and fill it with pegs and slots based on the number of lines provided.
+     * 
+     * @param {number} levels 
+     */
     function setup(levels) {
         let lines = 2 + levels;
 
@@ -342,6 +347,11 @@ window.onload = function () {
         app.stage.addChild(openning);
     }
 
+
+    /**
+     * Destroys a canvas and creates a new one.
+     * 
+     */
     function destroyApp() {
         document.getElementById("canvas").removeChild(app.view);
 
@@ -353,6 +363,12 @@ window.onload = function () {
         document.getElementById("canvas").appendChild(app.view);
     }
 
+    /**
+     * Round value to two decimal places.
+     * 
+     * @param {nunber} num Value
+     * @returns rounded value.
+     */
     function roundToTwoDecimal(num) {
         return +(Math.round(num + "e+2") + "e-2");
     }
