@@ -17,7 +17,7 @@ var openning; //Store the openning
 var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
 let music;
-var top_bounce =  0.5;
+var top_bounce = 0.5;
 var incr_weight_value = 0;
 var side_bounce = 4
 
@@ -305,7 +305,7 @@ window.onload = function () {
         pegs = [];
         slots = [];
 
-        fraction = 7 / lines; 
+        fraction = 7 / lines;
 
         let space_bottom = 150 * fraction;
 
@@ -386,9 +386,9 @@ window.onload = function () {
     let canvas_option_divs = document.querySelectorAll("#canvas-option_div")
     canvas_option_divs.forEach((op) => {
         op.addEventListener("click", function (e) {
-            let new_level = e.target.innerHTML; 
-            destroyApp(); 
-            setup(Number(new_level)); 
+            let new_level = e.target.innerHTML;
+            destroyApp();
+            setup(Number(new_level));
 
             canvas_option_divs.forEach(line_number => {
                 line_number.classList.remove("selected-line")
@@ -437,7 +437,7 @@ window.onload = function () {
         document.getElementById("game-info-wrapper").style.display = "none"
     })
 
-     document.getElementById("info-logo").addEventListener("click", () => {
+    document.getElementById("info-logo").addEventListener("click", () => {
         document.getElementById("game-info-wrapper").style.display = "flex"
     })
 
