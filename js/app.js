@@ -17,7 +17,7 @@ var openning; //Store the openning
 var bet = 1.00; //Bet amount
 var points = 100 //Amount of points
 let music;
-var top_bounce =  0.5;
+var top_bounce = 0.5;
 var incr_weight_value = 0;
 var side_bounce = 4
 
@@ -222,13 +222,13 @@ class Play {
                                 <td>${that.slotCost}x</td>
                                 ${(that.cost_scored > that.bet)
                                 ?
-                                `<td class="td-won">+${that.cost_scored}</td>`
+                                `<td class="td-won"><div>${that.cost_scored}</div></td>`
                                 :
                                 (that.cost_scored < that.bet)
                                     ?
-                                    `<td class="td-lost">-${that.cost_scored}</td>`
+                                    `<td class="td-lost"><div>${that.cost_scored}</div></td>`
                                     :
-                                    `<td>${that.cost_scored}</td>`
+                                    `<td class="td-no-gain"><div>${that.cost_scored}</div></td>`
                             }
                             </tr>`
 
@@ -257,8 +257,8 @@ class Play {
      * @returns true of collision is detected or else false.
      */
     isCollision(peg_x, peg_y, peg_r, ball_x, ball_y, ball_r) {
-        let squareDistance = (peg_x - ball_x) * (peg_x - ball_x) + (peg_y - ball_y) * (peg_y - ball_y);
-        return squareDistance <= ((peg_r + ball_r) * (peg_r + ball_r))
+        let circleDistance = (peg_x - ball_x) * (peg_x - ball_x) + (peg_y - ball_y) * (peg_y - ball_y);
+        return circleDistance <= ((peg_r + ball_r) * (peg_r + ball_r))
     }
 
     /**
@@ -292,6 +292,11 @@ window.onload = function () {
 
     app.stage.interactive = true;
 
+    /**
+     * Setting up the board and fill it with pegs and slots based on the number of lines provided.
+     * 
+     * @param {number} levels 
+     */
     function setup(levels) {
         let lines = 2 + levels;
 
@@ -300,7 +305,7 @@ window.onload = function () {
         pegs = [];
         slots = [];
 
-        fraction = 7 / lines; 
+        fraction = 7 / lines;
 
         let space_bottom = 150 * fraction;
 
@@ -342,6 +347,11 @@ window.onload = function () {
         app.stage.addChild(openning);
     }
 
+
+    /**
+     * Destroys a canvas and creates a new one.
+     * 
+     */
     function destroyApp() {
         document.getElementById("canvas").removeChild(app.view);
 
@@ -353,6 +363,12 @@ window.onload = function () {
         document.getElementById("canvas").appendChild(app.view);
     }
 
+    /**
+     * Round value to two decimal places.
+     * 
+     * @param {nunber} num Value
+     * @returns rounded value.
+     */
     function roundToTwoDecimal(num) {
         return +(Math.round(num + "e+2") + "e-2");
     }
@@ -370,9 +386,9 @@ window.onload = function () {
     let canvas_option_divs = document.querySelectorAll("#canvas-option_div")
     canvas_option_divs.forEach((op) => {
         op.addEventListener("click", function (e) {
-            let new_level = e.target.innerHTML; 
-            destroyApp(); 
-            setup(Number(new_level)); 
+            let new_level = e.target.innerHTML;
+            destroyApp();
+            setup(Number(new_level));
 
             canvas_option_divs.forEach(line_number => {
                 line_number.classList.remove("selected-line")
@@ -421,7 +437,7 @@ window.onload = function () {
         document.getElementById("game-info-wrapper").style.display = "none"
     })
 
-     document.getElementById("info-logo").addEventListener("click", () => {
+    document.getElementById("info-logo").addEventListener("click", () => {
         document.getElementById("game-info-wrapper").style.display = "flex"
     })
 

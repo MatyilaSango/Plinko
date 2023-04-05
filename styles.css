@@ -7,6 +7,18 @@
 
 body {
     background-image: url(images/Plinko_background.jpeg);
+    overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+    background-color: #0c1f3f;
+    width: 10px;
+    height: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #6b85a6;
+    border-radius: 20px;
 }
 
 .game-wrapper {
@@ -52,6 +64,30 @@ body {
     border-radius: 50px;
     overflow: hidden;
     height: fit-content;
+    animation: borderInOut linear 2s infinite;
+    background-color: #084A6D;
+}
+
+@keyframes borderInOut {
+    0% {
+        box-shadow: -15px 0 20px 10px rgba(255, 166, 0, 0.5);
+    }
+
+    25% {
+        box-shadow: 0 -10px 20px 10px rgba(255, 166, 0, 0.5);
+    }
+
+    50% {
+        box-shadow: 10px 0 20px 10px rgba(255, 166, 0, 0.5);
+    }
+
+    75% {
+        box-shadow: 0 10px 20px 10px rgba(255, 166, 0, 0.5);
+    }
+
+    100% {
+        box-shadow: -10px 0 20px 10px rgba(255, 166, 0, 0.5);
+    }
 }
 
 .canvas-options {
@@ -130,7 +166,8 @@ body {
     display: flex;
     align-items: center;
 }
-.points-bet-wrapper__weight{
+
+.points-bet-wrapper__weight {
     margin-top: 10px;
     border-top: 1px solid white;
     padding-top: 10px;
@@ -152,7 +189,8 @@ body {
     box-shadow: 0 0 10px black;
     cursor: pointer;
 }
-.points-bet-wrapper__weight--increase{
+
+.points-bet-wrapper__weight--increase {
     margin-left: 5px;
 }
 
@@ -162,7 +200,8 @@ body {
     margin-left: 0;
     margin-right: 10px;
 }
-.points-bet-wrapper__weight--decrease{
+
+.points-bet-wrapper__weight--decrease {
     margin-right: 0;
     margin-left: 10px;
 }
@@ -234,12 +273,9 @@ body {
     height: 200px;
     overflow-y: scroll;
 }
-.table-wrapper::-webkit-scrollbar{
-    background-color: transparent;
-}
 
-#game-history-table-body tr td:nth-child(4) {
-    padding-left: 50px;
+.table-wrapper::-webkit-scrollbar {
+    background-color: transparent;
 }
 
 .td-lost {
@@ -250,31 +286,42 @@ body {
     background-color: rgba(0, 128, 0, 0.5);
 }
 
-.game-info-wrapper{
+.td-won div,
+.td-lost div,
+.td-no-gain div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-info-wrapper {
     width: 100%;
-    min-height: fit-content;
+    height: inherit;
     position: absolute;
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.9);
     display: none;
-    align-items: center;
     justify-content: center;
 }
 
-.game-info-wrapper-infomation{
+.game-info-wrapper-infomation {
     width: 700px;
+    height: fit-content;
     color: white;
     font-style: italic;
     margin-top: 20px;
 }
-.start-button-wrapper{
+
+.start-button-wrapper {
     display: flex;
     justify-content: center;
     margin-top: 40px;
     margin-bottom: 40px;
 }
-.start-button-wrapper button{
+
+.start-button-wrapper button {
     height: 40px;
     width: 100px;
     background-color: rgba(0, 187, 255, 0.9);
@@ -284,14 +331,16 @@ body {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     cursor: pointer;
 }
-.start-button-wrapper button:active{
+
+.start-button-wrapper button:active {
     background-color: rgba(142, 223, 252, 0.9);
 }
 
-.start-button-wrapper button:hover{
+.start-button-wrapper button:hover {
     background-color: rgba(0, 187, 255, 0.5);
 }
-.info-logo{
+
+.info-logo {
     position: relative;
     right: -180px;
     cursor: pointer;
@@ -312,21 +361,22 @@ body {
 }
 
 @media screen and (max-width: 800px) {
-    .game-info-wrapper{
+    .game-info-wrapper {
         width: 800px;
         height: 150%;
+        background-color: rgba(0, 0, 0, 0.9);
     }
-    .game-info-wrapper-infomation{
+
+    .game-info-wrapper-infomation {
         position: relative;
         top: -100px;
     }
-    .game-info-wrapper-infomation p{
-        font-size: 30px;
-    }
-    .game-info-wrapper-infomation h1{
+
+    .game-info-wrapper-infomation h1 {
         font-size: 35px;
     }
-    .game-info-wrapper-infomation h3{
+
+    .game-info-wrapper-infomation h3 {
         font-size: 32px;
-    } 
+    }
 }
