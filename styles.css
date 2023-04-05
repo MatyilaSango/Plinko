@@ -64,6 +64,7 @@ body::-webkit-scrollbar-thumb{
     overflow: hidden;
     height: fit-content;
     animation: borderInOut linear 2s infinite;
+    background-color: #084A6D;
 }
 
 @keyframes borderInOut {
