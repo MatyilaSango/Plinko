@@ -278,16 +278,21 @@ body::-webkit-scrollbar-thumb {
     background-color: transparent;
 }
 
-#game-history-table-body tr td:nth-child(4) {
-    padding-left: 50px;
-}
-
 .td-lost {
     background-color: #f6a50320;
 }
 
 .td-won {
     background-color: rgba(0, 128, 0, 0.5);
+}
+
+.td-won div,
+.td-lost div,
+.td-no-gain div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .game-info-wrapper {

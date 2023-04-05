@@ -222,13 +222,13 @@ class Play {
                                 <td>${that.slotCost}x</td>
                                 ${(that.cost_scored > that.bet)
                                 ?
-                                `<td class="td-won">${that.cost_scored}</td>`
+                                `<td class="td-won"><div>${that.cost_scored}</div></td>`
                                 :
                                 (that.cost_scored < that.bet)
                                     ?
-                                    `<td class="td-lost">${that.cost_scored}</td>`
+                                    `<td class="td-lost"><div>${that.cost_scored}</div></td>`
                                     :
-                                    `<td>${that.cost_scored}</td>`
+                                    `<td class="td-no-gain"><div>${that.cost_scored}</div></td>`
                             }
                             </tr>`
 
