@@ -69,13 +69,19 @@ body::-webkit-scrollbar-thumb{
 
 @keyframes borderInOut {
     0%{
-        box-shadow: 0 0 20px 10px transparent;
+        box-shadow: -15px 0 20px 10px rgba(255, 166, 0, 0.5);
+    }
+    25%{
+        box-shadow: 0 -10px 20px 10px rgba(255, 166, 0, 0.5);
     }
     50%{
-        box-shadow: 0 0 20px 10px orange;
+        box-shadow: 10px 0 20px 10px rgba(255, 166, 0, 0.5);
+    }
+    75%{
+        box-shadow: 0 10px 20px 10px rgba(255, 166, 0, 0.5);
     }
     100%{
-        box-shadow: 0 0 20px 10px transparent;
+        box-shadow: -10px 0 20px 10px rgba(255, 166, 0, 0.5);
     }
 }
 
