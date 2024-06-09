@@ -214,8 +214,8 @@ class Play {
                         document.getElementById("points-bet-wrapper__points--player-points").innerHTML = window.points
                         window.document.getElementById("points-bet-wrapper__won-flash").classList.add("points-bet-wrapper__won-flash__animate")
 
-                        let tableGameHistory =  window.document.getElementById("game-history-table-body").innerHTML
-                        tableGameHistory =
+                        let tableGameHistory =  window.document.getElementById("game-history-table-body");
+                        tableGameHistory.innerHTML =
                             `<tr>
                                 <td colspan="1">${that.time}</td>
                                 <td>${that.bet}</td>
@@ -230,7 +230,7 @@ class Play {
                                     :
                                     `<td class="td-no-gain"><div>${that.cost_scored}</div></td>`
                             }
-                            </tr>` + tableGameHistory;
+                            </tr>` + tableGameHistory.innerHTML;
 
                         let tableWrapper = window.document.getElementById("table-wrapper");
                         tableWrapper.scrollTop = tableWrapper.scrollHeight;
