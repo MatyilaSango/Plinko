@@ -232,8 +232,8 @@ class Play {
                             }
                             </tr>` + tableGameHistory.innerHTML;
 
-                        let tableWrapper = window.document.getElementById("table-wrapper");
-                        tableWrapper.scrollTop = tableWrapper.scrollHeight;
+                        // let tableWrapper = window.document.getElementById("table-wrapper");
+                        // tableWrapper.scrollTop = tableWrapper.scrollHeight;
 
                         that.slots[slotIndx].slot.y += 10
                         setTimeout(() => {
